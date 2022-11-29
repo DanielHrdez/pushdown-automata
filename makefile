@@ -42,7 +42,4 @@ lint:
 	@cpplint $(INCLUDE_DIR)/* $(SOURCE_DIR)/* $(TEST_DIR)/*
 
 commit:
-	git pull && git add . && git commit -m $(MSG) && git push
-
-algo:
-	echo $(XD)
+	@git pull && git add . && git commit -m "$(MSG)" && git push
