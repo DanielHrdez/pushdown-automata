@@ -1,21 +1,34 @@
+APP_NAME = app
+BUILD_DIR = bin
+SOURCE_DIR = src
+TEST_DIR = test
+TEST_NAME = test
+
 WARNINGS = -pedantic -Wall -Wextra -Wcast-align -Wcast-qual -Wctor-dtor-privacy -Wdisabled-optimization -Wformat=2 -Winit-self -Wlogical-op -Wmissing-declarations -Wmissing-include-dirs -Wnoexcept -Wold-style-cast -Woverloaded-virtual -Wredundant-decls -Wshadow -Wsign-conversion -Wsign-promo -Wstrict-null-sentinel -Wstrict-overflow=5 -Wswitch-default -Wundef -Werror -Wno-unused
+
+DOC_DIRS = html latex
 
 all: compile run
 
 mkdir_bin:
-	@mkdir -p bin
+	@mkdir -p $(BUILD_DIR)
 
 compile: mkdir_bin
-	@g++ src/test.cc -o bin/test.exe -O3 $(WARNINGS)
+	@g++ $(SOURCE_DIR)/$(APP_NAME).cc -o $(BUILD_DIR)/$(APP_NAME).exe -O3 $(WARNINGS)
 
 run:
-	@./bin/test.exe
+	@./$(BUILD_DIR)/$(APP_NAME).exe
 
 debug: mkdir_bin
-	@g++ -g src/test.cc -o bin/test.exe $(WARNINGS)
+	@g++ -g $(SOURCE_DIR)/$(APP_NAME).cc -o $(BUILD_DIR)/$(APP_NAME).exe $(WARNINGS)
 
 clean:
-	@rm -rf bin
+	@rm -rf $(BUILD_DIR) $(DOC_DIRS)
 
-test:
-	
+tests: mkdir_bin
+	@g++ $(TEST_DIR)/$(TEST_NAME).cc -o $(BUILD_DIR)/$(TEST_NAME).exe -O3 $(WARNINGS) -lgtest -lpthread
+	@./$(BUILD_DIR)/$(TEST_NAME).exe
+
+docs:
+	@doxygen
+	@python3 -m http.server
