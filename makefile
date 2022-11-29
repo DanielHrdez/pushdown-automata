@@ -44,5 +44,5 @@ lint:
 lint_test:
 	@cpplint $(TEST_DIR)/*
 
-commit: test all
+commit: compile test
 	@git pull && git add . && git commit -m "$(MSG)" && git push
