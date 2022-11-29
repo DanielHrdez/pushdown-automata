@@ -1,5 +1,7 @@
 bin
 .vscode
+html
+latex
 
 # Prerequisites
 *.d

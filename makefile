@@ -16,3 +16,6 @@ debug: mkdir_bin
 
 clean:
 	@rm -rf bin
+
+test:
+	
