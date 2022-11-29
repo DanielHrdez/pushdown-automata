@@ -1,3 +1,8 @@
+/**
+ * Copyright 2022 Daniel Hernández de León
+ * daniel.leon.19@ull.edu.es
+ */
+
 #include <gtest/gtest.h>
 
 // Demonstrate some basic assertions.
@@ -9,12 +14,13 @@ TEST(HelloTest, BasicAssertions) {
 }
 
 int main(int argc, char **argv) {
-  ::testing::InitGoogleTest(&argc, argv);
+  testing::InitGoogleTest(&argc, argv);
   std::cout << "RUNNING TESTS ..." << std::endl;
-  int ret{RUN_ALL_TESTS()};
+  int ret {RUN_ALL_TESTS()};
   if (!ret) {
     std::cout << "<<<SUCCESS>>>" << std::endl;
-  }else {
+  } else {
     std::cout << "FAILED" << std::endl;
-  }return 0;
+  }
+  return 0;
 }

@@ -1,5 +1,6 @@
 APP_NAME = app
 BUILD_DIR = bin
+INCLUDE_DIR = include
 SOURCE_DIR = src
 TEST_DIR = test
 TEST_NAME = test
@@ -36,3 +37,12 @@ doc:
 
 serve: doc
 	@python3 -m http.server
+
+lint:
+	@cpplint $(INCLUDE_DIR)/* $(SOURCE_DIR)/* $(TEST_DIR)/*
+
+commit:
+	git pull && git add . && git commit -m $(MSG) && git push
+
+algo:
+	echo $(XD)
