@@ -25,10 +25,14 @@ debug: mkdir_bin
 clean:
 	@rm -rf $(BUILD_DIR) $(DOC_DIRS)
 
-tests: mkdir_bin
+.PHONY: test
+test: mkdir_bin
 	@g++ $(TEST_DIR)/$(TEST_NAME).cc -o $(BUILD_DIR)/$(TEST_NAME).exe -O3 $(WARNINGS) -lgtest -lpthread
 	@./$(BUILD_DIR)/$(TEST_NAME).exe
 
-docs:
+.PHONY: doc
+doc:
 	@doxygen
+
+serve: doc
 	@python3 -m http.server
