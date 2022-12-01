@@ -13,13 +13,16 @@
 
 #include "../include/pda.h"
 
+struct FPDAData : PDAData {
+  std::set<std::string> finite_states;
+};
+
 class FPDA : public PDA {
  public:
   FPDA(std::string inital_state, std::string initial_stack_symbol,
-       std::set<std::string> finite_states,
-       std::vector<Transition> transition_functions)
-      : PDA(inital_state, initial_stack_symbol, transition_functions),
-        finite_states_(finite_states) {}
+       std::vector<Transition> transition_functions,
+       std::set<std::string> finite_states);
+  explicit FPDA(FPDAData data);
 
  private:
   std::set<std::string> finite_states_;

@@ -9,17 +9,16 @@
 #include "../include/fpda.h"
 
 PDA PDAReader::ReadFromFile(const char *filename) {
-  FPDATupleArgs args = ReadFile(filename);
-  return PDA(std::get<0>(args), std::get<1>(args), std::get<3>(args));
+  PDAData args = ReadFile(filename, false);
+  return PDA(args);
 }
 
 FPDA PDAReader::ReadFromFileFPDA(const char *filename) {
-  FPDATupleArgs args = ReadFile(filename);
-  return FPDA(std::get<0>(args), std::get<1>(args), std::get<2>(args),
-              std::get<3>(args));
+  FPDAData args = ReadFile(filename, true);
+  return FPDA(args);
 }
 
-PDAReader::FPDATupleArgs PDAReader::ReadFile(const char *filename) {
+FPDAData PDAReader::ReadFile(const char *filename, bool finite) {
   std::ifstream pda_file(filename);
   if (!pda_file.is_open()) {
     throw "File cannot be opened";
@@ -28,9 +27,12 @@ PDAReader::FPDATupleArgs PDAReader::ReadFile(const char *filename) {
   IgnoreLines(pda_file, 3);
   std::string initial_state = ParseInitial(pda_file);
   std::string initial_stack_symbol = ParseInitial(pda_file);
-  std::set<std::string> finite_states = ParseSet(pda_file);
+  std::set<std::string> finite_states;
+  if (finite) {
+    finite_states = ParseSet(pda_file);
+  }
   std::vector<Transition> transitions = ParseTransitions(pda_file);
-  return {initial_state, initial_stack_symbol, finite_states, transitions};
+  return {initial_state, initial_stack_symbol, transitions, finite_states};
 }
 
 void PDAReader::IgnoreComments(std::ifstream &file) {
@@ -74,6 +76,9 @@ std::vector<Transition> PDAReader::ParseTransitions(std::ifstream &file) {
   std::vector<Transition> transitions;
   while (file) {
     std::getline(file, file_line);
+    if (file_line == "") {
+      break;
+    }
     transitions.push_back(ParseTransition(file_line));
   }
   return transitions;
@@ -91,6 +96,6 @@ Transition PDAReader::ParseTransition(std::string file_line) {
   while (std::getline(ss, aux_string, ' ')) {
     to_stack_symbols.push_back(aux_string);
   }
-  return Transition(from_state, from_input_symbol, from_stack_symbol, to_state,
-                    to_stack_symbols);
+  return {from_state, from_input_symbol, from_stack_symbol, to_state,
+          to_stack_symbols};
 }

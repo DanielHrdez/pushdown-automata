@@ -11,13 +11,17 @@
 
 #include "../include/transition.h"
 
+struct PDAData {
+  std::string inital_state;
+  std::string initial_stack_symbol;
+  std::vector<Transition> transition_functions;
+};
+
 class PDA {
  public:
   PDA(std::string inital_state, std::string initial_stack_symbol,
-      std::vector<Transition> transition_functions)
-      : inital_state_(inital_state),
-        initial_stack_symbol_(initial_stack_symbol),
-        transition_functions_(transition_functions) {}
+      std::vector<Transition> transition_functions);
+  explicit PDA(PDAData data);
 
  protected:
   std::string inital_state_;

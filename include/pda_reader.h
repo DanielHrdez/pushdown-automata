@@ -20,11 +20,7 @@ class PDAReader {
   static FPDA ReadFromFileFPDA(const char *filename);
 
  private:
-  using FPDATupleArgs =
-      std::tuple<std::string, std::string, std::set<std::string>,
-                 std::vector<Transition>>;
-
-  static FPDATupleArgs ReadFile(const char *filename);
+  static FPDAData ReadFile(const char *filename, bool finite = false);
   static void IgnoreComments(std::ifstream &file);
   static void IgnoreLines(std::ifstream &file, size_t n);
 

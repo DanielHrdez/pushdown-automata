@@ -4,8 +4,10 @@
  */
 
 #include <iostream>
+#include "../include/pda_reader.h"
 
 int main() {
-  std::cout << "Hello World" << std::endl;
+  FPDA fpda = PDAReader::ReadFromFileFPDA("examples/APf.txt");
+  std::cout << "FPDA complete!!" << std::endl;
   return 0;
 }
