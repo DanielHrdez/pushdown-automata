@@ -1,9 +1,19 @@
-APP_NAME = app
+APP_NAME = pda
+TEST_EXT = test
+DEBUG_EXT = debug
 BUILD_DIR = bin
+APP = $(BUILD_DIR)/$(APP_NAME).exe
+APP_TEST = $(BUILD_DIR)/$(APP_NAME).$(TEST_EXT).exe
+APP_DEBUG = $(BUILD_DIR)/$(APP_NAME).$(DEBUG_EXT).exe
+
 INCLUDE_DIR = include
+INCLUDE_FILES = $(shell find $(INCLUDE_DIR)/*.h -type f)
+
 SOURCE_DIR = src
+SOURCE_FILES = $(shell find $(SOURCE_DIR)/*.cc -type f)
+
 TEST_DIR = test
-TEST_NAME = test
+TEST_FILES = $(shell find $(TEST_DIR)/*.cc $(SOURCE_DIR)/*.cc -type f ! -path "src/main.cc")
 
 WARNINGS = -pedantic -Wall -Wextra -Wcast-align -Wcast-qual -Wctor-dtor-privacy -Wdisabled-optimization -Wformat=2 -Winit-self -Wlogical-op -Wmissing-declarations -Wmissing-include-dirs -Wnoexcept -Wold-style-cast -Woverloaded-virtual -Wredundant-decls -Wshadow -Wsign-conversion -Wsign-promo -Wstrict-null-sentinel -Wstrict-overflow=5 -Wswitch-default -Wundef -Werror -Wno-unused
 
@@ -15,21 +25,21 @@ mkdir_bin:
 	@mkdir -p $(BUILD_DIR)
 
 compile: lint mkdir_bin
-	@g++ $(SOURCE_DIR)/$(APP_NAME).cc -o $(BUILD_DIR)/$(APP_NAME).exe -O3 $(WARNINGS)
+	@g++ $(SOURCE_FILES) -o $(APP) -O3 $(WARNINGS)
 
 run:
-	@./$(BUILD_DIR)/$(APP_NAME).exe
+	@./$(APP)
 
 debug: lint mkdir_bin
-	@g++ -g $(SOURCE_DIR)/$(APP_NAME).cc -o $(BUILD_DIR)/$(APP_NAME).exe $(WARNINGS)
+	@g++ -g $(SOURCE_FILES) -o $(APP_DEBUG) $(WARNINGS)
 
 clean:
 	@rm -rf $(BUILD_DIR) $(DOC_DIRS)
 
 .PHONY: test
 test: lint_test mkdir_bin
-	@g++ $(TEST_DIR)/$(TEST_NAME).cc -o $(BUILD_DIR)/$(TEST_NAME).exe -O3 $(WARNINGS) -lgtest -lpthread
-	@./$(BUILD_DIR)/$(TEST_NAME).exe
+	@g++ $(TEST_FILES) -o $(APP_TEST) -O3 $(WARNINGS) -lgtest -lpthread
+	@./$(APP_TEST)
 
 .PHONY: doc
 doc:
