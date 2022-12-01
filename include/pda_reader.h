@@ -12,13 +12,19 @@
 #include <tuple>
 #include <vector>
 
-#include "../include/pda.h"
+#include "../include/fpda.h"
 
 class PDAReader {
  public:
-  static PDA ReadFromFile(const char *filename, bool finite = false);
+  static PDA ReadFromFile(const char *filename);
+  static FPDA ReadFromFileFPDA(const char *filename);
 
  private:
+  using FPDATupleArgs =
+      std::tuple<std::string, std::string, std::set<std::string>,
+                 std::vector<Transition>>;
+
+  static FPDATupleArgs ReadFile(const char *filename);
   static void IgnoreComments(std::ifstream &file);
   static void IgnoreLines(std::ifstream &file, size_t n);
 

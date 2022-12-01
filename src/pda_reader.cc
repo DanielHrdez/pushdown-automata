@@ -8,7 +8,18 @@
 
 #include "../include/fpda.h"
 
-PDA PDAReader::ReadFromFile(const char *filename, bool finite) {
+PDA PDAReader::ReadFromFile(const char *filename) {
+  FPDATupleArgs args = ReadFile(filename);
+  return PDA(std::get<0>(args), std::get<1>(args), std::get<3>(args));
+}
+
+FPDA PDAReader::ReadFromFileFPDA(const char *filename) {
+  FPDATupleArgs args = ReadFile(filename);
+  return FPDA(std::get<0>(args), std::get<1>(args), std::get<2>(args),
+              std::get<3>(args));
+}
+
+PDAReader::FPDATupleArgs PDAReader::ReadFile(const char *filename) {
   std::ifstream pda_file(filename);
   if (!pda_file.is_open()) {
     throw "File cannot be opened";
@@ -17,16 +28,9 @@ PDA PDAReader::ReadFromFile(const char *filename, bool finite) {
   IgnoreLines(pda_file, 3);
   std::string initial_state = ParseInitial(pda_file);
   std::string initial_stack_symbol = ParseInitial(pda_file);
-  std::set<std::string> finite_states;
-  if (finite) {
-    finite_states = ParseSet(pda_file);
-  }
+  std::set<std::string> finite_states = ParseSet(pda_file);
   std::vector<Transition> transitions = ParseTransitions(pda_file);
-  if (finite) {
-    return FPDA(initial_state, initial_stack_symbol, finite_states,
-                transitions);
-  }
-  return PDA(initial_state, initial_stack_symbol, transitions);
+  return {initial_state, initial_stack_symbol, finite_states, transitions};
 }
 
 void PDAReader::IgnoreComments(std::ifstream &file) {
