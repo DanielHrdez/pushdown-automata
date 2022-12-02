@@ -12,20 +12,20 @@
 #include "../include/transition.h"
 
 struct PDAData {
-  std::string inital_state;
-  std::string initial_stack_symbol;
+  State inital_state;
+  Symbol initial_stack_symbol;
   std::vector<Transition> transition_functions;
 };
 
 class PDA {
  public:
-  PDA(std::string inital_state, std::string initial_stack_symbol,
+  PDA(State inital_state, Symbol initial_stack_symbol,
       std::vector<Transition> transition_functions);
   explicit PDA(PDAData data);
 
  protected:
-  std::string inital_state_;
-  std::string initial_stack_symbol_;
+  State inital_state_;
+  Symbol initial_stack_symbol_;
   std::vector<Transition> transition_functions_;
 };
 

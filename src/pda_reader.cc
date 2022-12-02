@@ -24,8 +24,8 @@ FPDAData PDAReader::ReadFile(const char *filename, bool finite) {
     throw "File cannot be opened";
   }
   IgnoreComments(pda_file);
-  IgnoreLines(pda_file, 3);
-  std::string initial_state = ParseInitial(pda_file);
+  std::set<std::string> xd;
+  std::string initial_state = ParseInitial(pda_file, {""});
   std::string initial_stack_symbol = ParseInitial(pda_file);
   std::set<std::string> finite_states;
   if (finite) {
@@ -44,13 +44,6 @@ void PDAReader::IgnoreComments(std::ifstream &file) {
       file.seekg(oldpos);
       break;
     }
-  }
-}
-
-void PDAReader::IgnoreLines(std::ifstream &file, size_t n) {
-  std::string aux;
-  for (size_t i = 0; i < n; i++) {
-    std::getline(file, aux);
   }
 }
 

@@ -9,12 +9,18 @@
 #include <string>
 #include <vector>
 
-struct Transition {
-  std::string from_state;
-  std::string from_input_symbol;
-  std::string from_stack_symbol;
-  std::string to_state;
-  std::vector<std::string> to_stack_symbols;
+#include "../include/aliases.h"
+
+class Transition {
+ public:
+  Transition();
+
+ private:
+  State from_state;
+  Symbol from_input_symbol;
+  Symbol from_stack_symbol;
+  State to_state;
+  std::vector<Symbol> to_stack_symbols;
 };
 
 #endif  // INCLUDE_TRANSITION_H_

@@ -22,14 +22,9 @@ class PDAReader {
  private:
   static FPDAData ReadFile(const char *filename, bool finite = false);
   static void IgnoreComments(std::ifstream &file);
-  static void IgnoreLines(std::ifstream &file, size_t n);
-
   static std::set<std::string> ParseSet(std::ifstream &file);
-
-  static std::string ParseInitial(std::ifstream &file);
-
+  static std::string ParseInitial(std::ifstream &file, std::set<std::string> set);
   static std::vector<Transition> ParseTransitions(std::ifstream &file);
-
   static Transition ParseTransition(std::string file_line);
 };
 

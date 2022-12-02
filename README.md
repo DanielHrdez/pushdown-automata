@@ -4,4 +4,4 @@ Repositorio en C++ que representa un Autómata de Pila.
 
 ## Compilar y ejecutar
 
-    make
+    make no_lint
