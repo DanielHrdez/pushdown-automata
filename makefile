@@ -19,9 +19,9 @@ WARNINGS = -pedantic -Wall -Wextra -Wcast-align -Wcast-qual -Wctor-dtor-privacy 
 
 DOC_DIRS = html latex
 
-all: lint no_lint
+all: lint compile_run
 
-no_lint: compile run
+compile_run: compile run
 
 mkdir_bin:
 	@mkdir -p $(BUILD_DIR)

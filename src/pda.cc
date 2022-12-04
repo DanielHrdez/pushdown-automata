@@ -5,15 +5,11 @@
 
 #include "../include/pda.h"
 
-PDA::PDA(std::string inital_state, std::string initial_stack_symbol,
+PDA::PDA(Alphabet input_alphabet, std::string initial_state,
+         std::string initial_stack_symbol,
          std::vector<Transition> transition_functions) {
-  inital_state_ = inital_state;
+  input_alphabet_ = input_alphabet;
+  initial_state_ = initial_state;
   initial_stack_symbol_ = initial_stack_symbol;
   transition_functions_ = transition_functions;
-}
-
-PDA::PDA(PDAData data) {
-  inital_state_ = data.inital_state;
-  initial_stack_symbol_ = data.initial_stack_symbol;
-  transition_functions_ = data.transition_functions;
 }

@@ -9,18 +9,30 @@
 #include <string>
 #include <vector>
 
-#include "../include/aliases.h"
+using Symbol = std::string;
+using State = std::string;
+
+struct TransitionOutput {
+  State state;
+  std::vector<Symbol> stack_symbols;
+};
 
 class Transition {
  public:
-  Transition();
+  Transition(State from_state, Symbol from_input_symbol,
+             Symbol from_stack_symbol, State to_state,
+             std::vector<Symbol> to_stack_symbols);
+
+  TransitionOutput Transit(State state, Symbol input_symbol,
+                           Symbol stack_symbol);
 
  private:
-  State from_state;
-  Symbol from_input_symbol;
-  Symbol from_stack_symbol;
-  State to_state;
-  std::vector<Symbol> to_stack_symbols;
+  bool CheckInputs(State state, Symbol input_symbol, Symbol stack_symbol);
+
+  State from_state_;
+  Symbol from_input_symbol_;
+  Symbol from_stack_symbol_;
+  TransitionOutput output_;
 };
 
 #endif  // INCLUDE_TRANSITION_H_

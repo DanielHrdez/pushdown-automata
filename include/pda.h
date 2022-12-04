@@ -10,21 +10,16 @@
 #include <vector>
 
 #include "../include/transition.h"
-
-struct PDAData {
-  State inital_state;
-  Symbol initial_stack_symbol;
-  std::vector<Transition> transition_functions;
-};
+#include "../include/set_strings.h"
 
 class PDA {
  public:
-  PDA(State inital_state, Symbol initial_stack_symbol,
+  PDA(Alphabet input_alphabet, State initial_state, Symbol initial_stack_symbol,
       std::vector<Transition> transition_functions);
-  explicit PDA(PDAData data);
 
  protected:
-  State inital_state_;
+  Alphabet input_alphabet_;
+  State initial_state_;
   Symbol initial_stack_symbol_;
   std::vector<Transition> transition_functions_;
 };

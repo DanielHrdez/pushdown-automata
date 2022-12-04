@@ -7,7 +7,8 @@
 #include "../include/pda_reader.h"
 
 int main() {
-  FPDA fpda = PDAReader::ReadFromFileFPDA("examples/APf.txt");
-  std::cout << "FPDA complete!!" << std::endl;
+  PDAReader reader = PDAReader();
+  PDA pda = reader.ReadFromFile("examples/APv-2.txt");
+  std::cout << "PDA complete!!" << std::endl;
   return 0;
 }

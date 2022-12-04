@@ -12,20 +12,27 @@
 #include <tuple>
 #include <vector>
 
-#include "../include/fpda.h"
+#include "../include/pda.h"
+#include "../include/set_strings.h"
+#include "../include/transition.h"
 
 class PDAReader {
  public:
-  static PDA ReadFromFile(const char *filename);
-  static FPDA ReadFromFileFPDA(const char *filename);
+  PDAReader() {}
+  PDA ReadFromFile(const char *filename, Symbol epsilon = ".");
 
  private:
-  static FPDAData ReadFile(const char *filename, bool finite = false);
-  static void IgnoreComments(std::ifstream &file);
-  static std::set<std::string> ParseSet(std::ifstream &file);
-  static std::string ParseInitial(std::ifstream &file, std::set<std::string> set);
-  static std::vector<Transition> ParseTransitions(std::ifstream &file);
-  static Transition ParseTransition(std::string file_line);
+  enum TypeInitial { kState_, kSymbol_ };
+  void IgnoreComments();
+  SetStrings ParseSet();
+  std::string ParseInitial(SetStrings set, TypeInitial type);
+  std::vector<Transition> ParseTransitions(SetStates set_states,
+                                           Alphabet input_alphabet,
+                                           Alphabet stack_alphabet);
+  Transition ParseTransition(std::string file_line, SetStates set_states,
+                             Alphabet input_alphabet, Alphabet stack_alphabet);
+
+  std::ifstream pda_file_;
 };
 
 #endif  // INCLUDE_PDA_READER_H_
