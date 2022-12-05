@@ -56,3 +56,24 @@ TEST(SetStrings, Insert) {
   EXPECT_FALSE(s2.Insert("b"));
   EXPECT_FALSE(s2.Insert("c"));
 }
+
+TEST(SetStrings, CheckString) {
+  SetStrings s1 = SetStrings({"a", "b", "c"});
+  SetStrings s2 = SetStrings({"a", "b", "c", "a", "b", "c", "a", "b", "c"});
+
+  EXPECT_TRUE(s1.CheckString("abcaaa"));
+  EXPECT_TRUE(s1.CheckString("abaab"));
+  EXPECT_TRUE(s1.CheckString("b"));
+
+  EXPECT_THROW(s1.CheckString("xxabc"), std::runtime_error);
+  EXPECT_THROW(s1.CheckString("yaaab"), std::runtime_error);
+  EXPECT_THROW(s1.CheckString("abcabcab5c"), std::runtime_error);
+
+  EXPECT_TRUE(s2.CheckString("abcaaa"));
+  EXPECT_TRUE(s2.CheckString("abaab"));
+  EXPECT_TRUE(s2.CheckString("b"));
+
+  EXPECT_THROW(s2.CheckString("xxabc"), std::runtime_error);
+  EXPECT_THROW(s2.CheckString("yaaab"), std::runtime_error);
+  EXPECT_THROW(s2.CheckString("abcabcab5c"), std::runtime_error);
+}

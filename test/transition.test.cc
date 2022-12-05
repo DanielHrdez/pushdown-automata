@@ -19,8 +19,10 @@ TEST(Transition, Transit) {
   TransitionOutput real_t1_output = t1.Transit("q1", "a", "A");
   TransitionOutput real_t2_output = t2.Transit("q1", "a", ".");
 
-  TransitionOutput expect_t1_output = {"q2", {"A", "S"}};
-  TransitionOutput expect_t2_output = {"q2", {"A", "A"}};
+  TransitionOutput expect_t1_output = {
+      "q2", {"A", "S"}, TransitionType::kReplace_};
+  TransitionOutput expect_t2_output = {
+      "q2", {"A", "A"}, TransitionType::kReplace_};
 
   EXPECT_EQ(real_t1_output.state, expect_t1_output.state);
   EXPECT_EQ(real_t1_output.stack_symbols, expect_t1_output.stack_symbols);

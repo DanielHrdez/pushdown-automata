@@ -12,10 +12,19 @@
 using Symbol = std::string;
 using State = std::string;
 
+enum TransitionType {
+  kReplace_,
+  kPush_,
+  kPop_,
+  kNoChange_,
+};
+
 struct TransitionOutput {
   State state;
   std::vector<Symbol> stack_symbols;
+  TransitionType type;
 };
+bool operator==(const TransitionOutput left, const TransitionOutput right);
 
 class Transition {
  public:

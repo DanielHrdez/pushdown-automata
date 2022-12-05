@@ -4,11 +4,23 @@
  */
 
 #include <iostream>
-#include "../include/pda_reader.h"
+
+#include "../include/pd_automaton.h"
+#include "../include/pda_parser.h"
 
 int main() {
-  PDAReader reader = PDAReader();
-  PDA pda = reader.ReadFromFile("examples/APv-2.txt");
-  std::cout << "PDA complete!!" << std::endl;
+  PDAParser parser = PDAParser("examples/APv.txt");
+  parser.IgnoreComments();
+  std::cout << parser.FileReadPosition() << std::endl;
+  // PDAutomaton pda = PDAutomaton("examples/APv.txt");
+  // std::string str;
+  // str = "ab";
+  // std::cout << str << pda.Check(str) << std::endl;
+  // str = "aab";
+  // std::cout << str << pda.Check(str) << std::endl;
+  // str = "abba";
+  // std::cout << str << pda.Check(str) << std::endl;
+  // str = "abaaba";
+  // std::cout << str << pda.Check(str) << std::endl;
   return 0;
 }

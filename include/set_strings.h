@@ -14,7 +14,12 @@ class SetStrings {
   SetStrings();
   explicit SetStrings(std::set<std::string> set_strings);
   bool Contains(std::string element);
+  bool CheckString(std::string string);
   bool Insert(std::string element);
+
+  friend bool operator==(const SetStrings &left, const SetStrings &right) {
+    return left.set_strings_ == right.set_strings_;
+  }
 
  private:
   std::set<std::string> set_strings_;
