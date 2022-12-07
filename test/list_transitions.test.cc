@@ -16,13 +16,13 @@ TEST(ListTransitions, Transit) {
       {"q0", "b", "A", "q0", {"A"}},
       {"q0", ".", ".", "q1", {"."}}};
   ListTransitions transitions = ListTransitions(vector_transitions);
-  Stack stack = Stack();
-  stack.push("A");
   std::vector<TransitionOutput> output = {{"q1", {"A", "b"}, kReplace_},
                                           {"q1", {"B", "b"}, kReplace_},
                                           {"q1", {}, kNoChange_}};
-  EXPECT_EQ(transitions.Transit("q0", stack, "a")[0], output[0]);
-  EXPECT_EQ(transitions.Transit("q0", stack, "a")[1], output[1]);
-  EXPECT_EQ(transitions.Transit("q0", stack, "a")[2], output[2]);
-  EXPECT_THROW(transitions.Transit("q3", stack, "X"), std::runtime_error);
+  Branches real = transitions.Transit("q0", "a", "A");
+  EXPECT_EQ(real.size(), output.size());
+  EXPECT_EQ(real[0], output[0]);
+  EXPECT_EQ(real[1], output[1]);
+  EXPECT_EQ(real[2], output[2]);
+  EXPECT_THROW(transitions.Transit("q3", "A", "X"), std::runtime_error);
 }

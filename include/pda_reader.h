@@ -6,11 +6,13 @@
 #ifndef INCLUDE_PDA_READER_H_
 #define INCLUDE_PDA_READER_H_
 
+#include <string>
+
 #include "../include/pda_parser.h"
 
 class PDAReader {
  public:
-  static PDAutomaton ReadFromFile(const char *filename);
+  static PDAutomaton ReadFromFile(std::string filename);
 };
 
 #endif  // INCLUDE_PDA_READER_H_

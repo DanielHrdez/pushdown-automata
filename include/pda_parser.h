@@ -16,7 +16,7 @@
 
 class PDAParser {
  public:
-  explicit PDAParser(const char *filename);
+  explicit PDAParser(std::string filename);
   std::streampos FileReadPosition();
   void IgnoreComments();
   SetStrings ParseSet();

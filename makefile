@@ -19,9 +19,7 @@ WARNINGS = -pedantic -Wall -Wextra -Wcast-align -Wcast-qual -Wctor-dtor-privacy 
 
 DOC_DIRS = html latex
 
-all: lint compile_run
-
-compile_run: compile run
+all: lint compile run
 
 mkdir_bin:
 	@mkdir -p $(BUILD_DIR)
@@ -39,7 +37,7 @@ clean:
 	@rm -rf $(BUILD_DIR) $(DOC_DIRS)
 
 .PHONY: test
-test: lint_test mkdir_bin
+test: lint lint_test mkdir_bin
 	@g++ $(TEST_FILES) -o $(APP_TEST) -O3 $(WARNINGS) -lgtest -lpthread
 	@./$(APP_TEST)
 
@@ -56,5 +54,5 @@ lint:
 lint_test:
 	@cpplint $(TEST_DIR)/*
 
-commit: lint compile 
+commit: lint compile test
 	@git pull && git add . && git commit -m "$(MSG)" && git push

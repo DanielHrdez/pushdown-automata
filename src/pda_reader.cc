@@ -6,7 +6,7 @@
 
 #include "../include/pda_parser.h"
 
-PDAutomaton PDAReader::ReadFromFile(const char *filename) {
+PDAutomaton PDAReader::ReadFromFile(std::string filename) {
   PDAParser parser = PDAParser(filename);
   parser.IgnoreComments();
   SetStates set_states = parser.ParseSet();

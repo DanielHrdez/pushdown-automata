@@ -11,14 +11,13 @@
 
 #include "../include/transition.h"
 
-using Stack = std::stack<Symbol>;
+using Branches = std::vector<TransitionOutput>;
 
 class ListTransitions {
  public:
   ListTransitions();
   explicit ListTransitions(std::vector<Transition> transitions);
-  std::vector<TransitionOutput> Transit(State state, Stack stack,
-                                        Symbol symbol);
+  Branches Transit(State state, Symbol input_symbol, Symbol stack_symbol);
 
  private:
   std::vector<Transition> transition_functions_;

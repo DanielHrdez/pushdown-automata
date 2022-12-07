@@ -6,7 +6,7 @@
 
 #include <sstream>
 
-PDAParser::PDAParser(const char *filename) {
+PDAParser::PDAParser(std::string filename) {
   pda_file_ = std::ifstream(filename);
 }
 

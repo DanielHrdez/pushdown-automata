@@ -24,6 +24,7 @@ struct TransitionOutput {
   std::vector<Symbol> stack_symbols;
   TransitionType type;
 };
+
 bool operator==(const TransitionOutput left, const TransitionOutput right);
 
 class Transition {
